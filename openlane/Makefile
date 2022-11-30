@@ -51,7 +51,7 @@ endif
 
 docker_startup_mode = $(shell test -t 0 && echo "-it" || echo "--rm" )
 docker_run = \
-	docker run $(docker_startup_mode) \
+	docker run --memory="16g" --memory-swap="64g" $(docker_startup_mode) \
 	$(docker_mounts) \
 	$(docker_env) \
 	-u $(shell id -u $(USER)):$(shell id -g $(USER))
@@ -61,7 +61,8 @@ list:
 
 .PHONY: $(designs)
 $(designs) : export current_design=$@
-$(designs) : % : ./%/config.json
+$(designs) : % : ./%/config.tcl
+#$(designs) : % : ./%/config.json
 ifneq (,$(wildcard ./$(current_design)/interactive.tcl))
 	$(docker_run) \
 		$(OPENLANE_IMAGE_NAME) sh -c $(openlane_cmd_interactive)

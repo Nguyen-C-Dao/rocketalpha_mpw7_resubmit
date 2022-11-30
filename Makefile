@@ -115,7 +115,7 @@ TARGET_PATH=$(shell pwd)
 verify_command="source ~/.bashrc && cd ${TARGET_PATH}/verilog/dv/$* && export SIM=${SIM} && make"
 dv_base_dependencies=simenv
 docker_run_verify=\
-	docker run -v ${TARGET_PATH}:${TARGET_PATH} -v ${PDK_ROOT}:${PDK_ROOT} \
+	docker run --memory="16g" --memory-swap="64g" -v ${TARGET_PATH}:${TARGET_PATH} -v ${PDK_ROOT}:${PDK_ROOT} \
 		-v ${CARAVEL_ROOT}:${CARAVEL_ROOT} \
 		-e TARGET_PATH=${TARGET_PATH} -e PDK_ROOT=${PDK_ROOT} \
 		-e CARAVEL_ROOT=${CARAVEL_ROOT} \
@@ -287,7 +287,7 @@ setup-timing-scripts: $(TIMING_ROOT)
 .PHONY: create-spef-mapping
 create-spef-mapping: ./verilog/gl/user_project_wrapper.v
 	docker run \
-		--rm \
+		--rm --memory="16g" --memory-swap="64g" \
 		-u $$(id -u $$USER):$$(id -g $$USER) \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(CUP_ROOT):$(CUP_ROOT) \
@@ -306,7 +306,7 @@ create-spef-mapping: ./verilog/gl/user_project_wrapper.v
 .PHONY: extract-parasitics
 extract-parasitics: ./verilog/gl/user_project_wrapper.v
 	docker run \
-		--rm \
+		--rm --memory="16g" --memory-swap="64g" \
 		-u $$(id -u $$USER):$$(id -g $$USER) \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(CUP_ROOT):$(CUP_ROOT) \
