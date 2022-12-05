@@ -34,7 +34,9 @@ set ::env(FP_SIZING) absolute
 set ::env(DIE_AREA) "0 0 2880 3480"
 
 #set ::env(PL_OPENPHYSYN_OPTIMIZATIONS) 0
-set ::env(DIODE_INSERTION_STRATEGY) 5
+#set ::env(DIODE_INSERTION_STRATEGY) 5 #default=3
+##skip sta_parasitic_run to check the diode insertion strategy (5-failed)
+set ::env(RUN_SPEF_EXTRACTION) 0
 
 set ::env(MAGIC_WRITE_FULL_LEF) 0
 
@@ -72,6 +74,12 @@ set ::env(RUN_CVC) 0
 set ::env(RUN_MAGIC_DRC) 0
 #set ::env(TAKE_LAYOUT_SCROT) 1
 
+set ::env(SYNTH_CLOCK_UNCERTAINTY) 0.2
+set ::env(PL_RESIZER_MAX_SLEW_MARGIN) 30
+set ::env(PL_RESIZER_MAX_CAP_MARGIN) 30
+set ::env(PL_RESIZER_HOLD_MAX_BUFFER_PERCENT) 60
+set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.3
+set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) 0.15
 #set ::env(PL_MAX_DISPLACEMENT_X) 800
 #set ::env(PL_MAX_DISPLACEMENT_Y) 600
 #set ::env(FP_TAP_HORIZONTAL_HALO) 20
@@ -126,16 +134,16 @@ set ::env(EXTRA_LIBS) "\
 
 ### Macro PDN Connections
 set ::env(FP_PDN_MACRO_HOOKS) "\
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.frontend.icache.tag_array.tag_array_ext.mem_0_0 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.frontend.icache.data_arrays_0.data_arrays_0_0_ext.mem_0_0 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_0_0 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_0_1 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_1_0 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_1_1 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_2_0 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_2_1 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_3_0 vccd1 vssd1 \
-        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_3_1 vccd1 vssd1 "
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.frontend.icache.tag_array.tag_array_ext.mem_0_0 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.frontend.icache.data_arrays_0.data_arrays_0_0_ext.mem_0_0 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_0_0 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_0_1 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_1_0 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_1_1 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_2_0 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_2_1 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_3_0 vccd1 vssd1 vccd1 vssd1, \
+        Inst_ChipTop.system.tile_prci_domain.tile_reset_domain.tile.dcache.data.data_arrays_0.data_arrays_0_ext.mem_3_1 vccd1 vssd1 vccd1 vssd1"
 
 #set ::env(GLB_RT_OBS) "met1 0 0 $::env(DIE_AREA),\
 #				   met2 0 0 $::env(DIE_AREA),\

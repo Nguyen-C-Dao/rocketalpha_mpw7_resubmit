@@ -35,32 +35,32 @@ set ::env(DESIGN_NAME) user_project_wrapper
 ## Source Verilog Files
 set ::env(VERILOG_FILES) "\
 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-	$script_dir/../../verilog/rtl/user_project_wrapper.v"
+	$script_dir/../../../../verilog/rtl/user_project_wrapper.v"
 
 ## Clock configurations
 set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(CLOCK_NET) "Inst_user_project_wrapper1.wb_clk_i"
 
-set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PERIOD) "20"
 
 ## Internal Macros
 ### Macro PDN Connections
 set ::env(FP_PDN_MACRO_HOOKS) "\
-	Inst_user_project_wrapper1 vccd1 vssd1"
+	Inst_user_project_wrapper1 vccd1 vssd1 vccd1 vssd1"
 
 ### Macro Placement
-set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
+set ::env(MACRO_PLACEMENT_CFG) $script_dir/../../macro.cfg
 
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-	$script_dir/../../verilog/rtl/user_project_wrapper1.v"
+	$script_dir/../../../../verilog/rtl/user_project_wrapper1.v"
 
 set ::env(EXTRA_LEFS) "\
-	$script_dir/../../lef/user_project_wrapper1.lef"
+	$script_dir/../../../../lef/user_project_wrapper1.lef"
 
 set ::env(EXTRA_GDS_FILES) "\
-	$script_dir/../../gds/user_project_wrapper1.gds"
+	$script_dir/../../../../gds/user_project_wrapper1.gds"
 
 # set ::env(GLB_RT_MAXLAYER) 5
 set ::env(RT_MAX_LAYER) {met4}
@@ -70,7 +70,7 @@ set ::env(RT_MAX_LAYER) {met4}
 set ::env(FP_PDN_CHECK_NODES) 0
 
 # The following is because there are no std cells in the example wrapper project.
-set ::env(SYNTH_TOP_LEVEL) 1
+#set ::env(SYNTH_TOP_LEVEL) 1
 set ::env(PL_RANDOM_GLB_PLACEMENT) 0
 set ::env(PL_BASIC_PLACEMENT) 0
 set ::env(PL_SKIP_INITIAL_PLACEMENT) 1
@@ -82,8 +82,12 @@ set ::env(PL_RESIZER_BUFFER_INPUT_PORTS) 0
 set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
 
 set ::env(FP_PDN_ENABLE_RAILS) 0
+set ::env(FP_PDN_VPITCH) 250
 
 set ::env(DIODE_INSERTION_STRATEGY) 0
-set ::env(FILL_INSERTION) 0
-set ::env(TAP_DECAP_INSERTION) 0
+set ::env(RUN_FILL_INSERTION) 0
+set ::env(RUN_TAP_DECAP_INSERTION) 0
 set ::env(CLOCK_TREE_SYNTH) 0
+#to test def/gds 
+set ::env(FP_PDN_IRDROP) 0
+set ::env(RUN_IRDROP_REPORT) 0
