@@ -6,6 +6,7 @@
 |-----------------------------------------|
 
 ## Please fill in your project documentation in this README.md file 
+This project demonstrates a customized Rocket Chip SoC, generated from Chipyard. The SoC was implemented in Sky130nm using the Openlane flow.
 
 Refer to [README](docs/source/index.rst#section-quickstart) for a quickstart of how to use caravel_user_project
 
